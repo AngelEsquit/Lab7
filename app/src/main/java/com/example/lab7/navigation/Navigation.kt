@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.lab7.ui.categories.view.MealsCategoriesScreen
+import com.example.lab7.ui.mealdetail.view.MealsDetailScreen
 import com.example.lab7.ui.meals.view.MealsFilterScreen
 
 @Composable
@@ -35,6 +36,16 @@ fun Navigation(navController: NavHostController, modifier: Modifier = Modifier) 
         }
         composable(route = NavigationState.Profile.route) {
             //Screen of Profile
+        }
+
+        composable(
+            route = NavigationState.MealDetail.route,
+            arguments = listOf(navArgument("mealId") {
+                type = NavType.StringType
+            })
+        ) { backStackEntry ->
+            val mealId = backStackEntry.arguments?.getString("mealId") ?: ""
+            MealsDetailScreen(navController = navController, mealId = mealId)
         }
     }
 }

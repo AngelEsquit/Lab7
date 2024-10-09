@@ -33,8 +33,8 @@ import coil.compose.rememberImagePainter
 import com.example.lab7.R
 import com.example.lab7.networking.response.meals.Meal
 import com.example.lab7.ui.categories.view.MealsCategoriesScreen
-import com.example.lab7.ui.meals.viewmodel.MealsViewModel
 import com.example.lab7.navigation.AppBar
+import com.example.lab7.ui.meals.viewmodel.MealsViewModel
 import com.example.lab7.ui.theme.MealsWithRoomTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -50,12 +50,15 @@ fun MealsFilterScreen(navController: NavController, category: String) {
     }
 
     Scaffold(topBar = {
-        AppBar(title = "Categories", navController = navController)
+        AppBar(title = "Recipes", navController = navController)
     }) {
-        LazyColumn(contentPadding = PaddingValues(16.dp)) {
+        LazyColumn(contentPadding = PaddingValues(16.dp),
+            modifier = Modifier
+                .padding(top = 75.dp)
+                .padding(bottom = 30.dp)) {
             mealFilter?.let {
                 items(it) { meal ->
-                    MealCategory(meal)
+                    MealCategory(meal, navController)
                 }
             }
         }

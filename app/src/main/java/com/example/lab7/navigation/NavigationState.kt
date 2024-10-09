@@ -6,6 +6,10 @@ sealed class NavigationState(val route: String) {
     data object MealsRecipesList: NavigationState("categories/{category}")  {
         fun createRoute(category: String) = "categories/$category"
     }
+
+    data object MealDetail: NavigationState("mealDetail/{mealId}") {
+        fun createRoute(mealId: String) = "mealDetail/$mealId"
+    }
     data object Home: NavigationState("home")
     data object Profile: NavigationState("profile")
 }
