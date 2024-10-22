@@ -11,5 +11,16 @@ sealed class NavigationState(val route: String) {
         fun createRoute(mealId: String) = "mealDetail/$mealId"
     }
     data object Home: NavigationState("home")
+
     data object Profile: NavigationState("profile")
+
+    data object ViewPhoto: NavigationState("viewPhoto")
+
+    data object Camera: NavigationState("camera")
+
+    data object Supermarket: NavigationState("supermarket")
+
+    data object SupermarketCamera: NavigationState("supermarket/{photoPath}") {
+        fun createRoute(photoPath: String) = "supermarket/$photoPath"
+    }
 }

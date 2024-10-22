@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Meals App</string>
+    <string name="app_name">Supermarket App</string>
     <string name="category_name">Category Name</string>
     <string name="recepies_name">Recipes Name</string>
     <string name="date_content">Date %1$s Month %2$s day</string>

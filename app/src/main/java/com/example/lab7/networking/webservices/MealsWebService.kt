@@ -6,9 +6,14 @@ import com.example.lab7.networking.response.meals.MealsResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MealsWebService {
+interface IMealsWebService {
+    suspend fun getMealsCategories(): MealsCategoriesResponse
+    suspend fun filterMealsByCategory(category: String): MealsResponse
+}
 
-    private lateinit var api: MealsApi
+class MealsWebService: IMealsWebService {
+
+    private var api: MealsApi
 
     init {
         val retrofit = Retrofit.Builder()
@@ -19,11 +24,11 @@ class MealsWebService {
         api = retrofit.create(MealsApi::class.java)
     }
 
-    suspend fun getMealsCategories(): MealsCategoriesResponse {
+    override suspend fun getMealsCategories(): MealsCategoriesResponse {
         return api.getMealsCategories()
     }
 
-    suspend fun filterMealsByCategory(category: String): MealsResponse {
+    override suspend fun filterMealsByCategory(category: String): MealsResponse {
         return api.filterByCategory(category)
     }
 }

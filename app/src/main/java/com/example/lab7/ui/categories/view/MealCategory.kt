@@ -15,17 +15,15 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.lab7.R
-import com.example.lab7.networking.response.categories.Categories
+import com.example.lab7.database.categories.MealCategoryEntity
 import com.example.lab7.navigation.NavigationState
 import com.example.lab7.navigation.navigateTo
 
 @Composable
-fun MealCategory(meal: Categories, navController: NavController) {
+fun MealCategory(meal: MealCategoryEntity, navController: NavController) {
     Card(
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
