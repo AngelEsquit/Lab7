@@ -16,8 +16,8 @@ interface SupermarketItemDao {
     @Update
     suspend fun update(item: SupermarketItemEntity)
 
-    @Delete
-    suspend fun delete(item: SupermarketItemEntity)
+    @Query("DELETE FROM supermarket_items WHERE imagePath = :imagePath")
+    suspend fun delete(imagePath: String)
 
     @Query("SELECT * FROM supermarket_items")
     fun getAllItems(): List<SupermarketItemEntity>

@@ -1,5 +1,8 @@
 package com.example.lab7.navigation
 
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
+
 sealed class NavigationState(val route: String) {
     data object MealsCategories: NavigationState("categories")
 
@@ -21,6 +24,11 @@ sealed class NavigationState(val route: String) {
     data object Supermarket: NavigationState("supermarket")
 
     data object SupermarketCamera: NavigationState("supermarket/{photoPath}") {
-        fun createRoute(photoPath: String) = "supermarket/$photoPath"
+        fun createRoute(photoPath: String): String {
+            val encodedPath = URLEncoder.encode(photoPath, StandardCharsets.UTF_8.toString())
+            return "supermarket/$encodedPath"
+        }
+
+
     }
 }

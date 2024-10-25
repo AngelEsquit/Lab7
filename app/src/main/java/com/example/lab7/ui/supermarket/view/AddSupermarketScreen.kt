@@ -54,7 +54,6 @@ fun SupermarketScreen(navController: NavController, photoPath: String, viewModel
             .padding(bottom = 30.dp)){
             item { // Nombre
                 Box {
-                    Text(text = photoPath)
                     TextField(
                         value = itemName,
                         onValueChange = { itemName = it },

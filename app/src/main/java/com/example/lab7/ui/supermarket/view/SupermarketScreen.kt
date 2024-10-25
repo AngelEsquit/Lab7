@@ -48,6 +48,7 @@ fun SupermarketScreen(navController: NavController, viewModel: SupermarketViewMo
 
     val items = viewModel.supermarketItems.observeAsState(initial = emptyList())
 
+
     LaunchedEffect(Unit) {
         viewModel.getAllItems()
     }
@@ -69,7 +70,7 @@ fun SupermarketScreen(navController: NavController, viewModel: SupermarketViewMo
             }
 
             items(items.value) {
-                it.imagePath?.let { it1 -> showImage(it.name, it.quantity, it1) }
+                it.imagePath?.let { it1 -> ShowImage(it.name, it.quantity, it1, viewModel) }
             }
         }
     }

@@ -37,9 +37,9 @@ class SupermarketViewModel(private val supermarketRepository: SupermarketReposit
         }
     }
 
-    fun deleteItem(item: SupermarketItemEntity) {
+    fun deleteItem(path: String) {
         viewModelScope.launch {
-            supermarketRepository.deleteItem(item)
+            supermarketRepository.deleteItem(path)
         }
     }
 
