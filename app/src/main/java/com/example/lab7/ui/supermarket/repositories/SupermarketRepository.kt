@@ -17,8 +17,8 @@ class SupermarketRepository(private val supermarketItemDao: SupermarketItemDao) 
         supermarketItemDao.update(item)
     }
 
-    suspend fun deleteItem(item: SupermarketItemEntity) {
-        supermarketItemDao.delete(item)
+    suspend fun deleteItem(imagePath: String) {
+        supermarketItemDao.delete(imagePath)
     }
 
     fun getItemById(id: String): LiveData<SupermarketItemEntity> = supermarketItemDao.getItemById(id)

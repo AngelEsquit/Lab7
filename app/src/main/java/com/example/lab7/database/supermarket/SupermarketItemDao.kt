@@ -7,7 +7,11 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+<<<<<<< Updated upstream
 import kotlinx.coroutines.flow.Flow
+=======
+import okio.Path
+>>>>>>> Stashed changes
 
 @Dao
 interface SupermarketItemDao {
@@ -18,8 +22,8 @@ interface SupermarketItemDao {
     @Update
     suspend fun update(item: SupermarketItemEntity)
 
-    @Delete
-    suspend fun delete(item: SupermarketItemEntity)
+    @Query("DELETE FROM supermarket_items WHERE imagePath = :imagePath")
+    suspend fun delete(imagePath: String)
 
     @Query("SELECT * FROM supermarket_items")
     fun getAllItems(): List<SupermarketItemEntity>

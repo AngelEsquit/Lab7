@@ -8,9 +8,12 @@
       <SelectionState runConfigName="DefaultPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+<<<<<<< Updated upstream
       <SelectionState runConfigName="SupermarketScreenPreview">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
+=======
+>>>>>>> Stashed changes
     </selectionStates>
   </component>
 </project>

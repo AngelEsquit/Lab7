@@ -52,6 +52,7 @@ fun SupermarketScreen(navController: NavController, viewModel: SupermarketViewMo
                 }
             }
 
+<<<<<<< Updated upstream
             /*items(items.value) { item ->
                 Card {
                     Row {
@@ -73,6 +74,11 @@ fun SupermarketScreen(navController: NavController, viewModel: SupermarketViewMo
                     }
                 }
             }*/
+=======
+            items(items.value) {
+                it.imagePath?.let { it1 -> showImage(it.name, it.quantity, it1, viewModel) }
+            }
+>>>>>>> Stashed changes
         }
     }
 }

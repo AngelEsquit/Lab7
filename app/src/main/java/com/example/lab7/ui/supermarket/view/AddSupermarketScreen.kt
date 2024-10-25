@@ -48,6 +48,7 @@ fun SupermarketScreen(navController: NavController, photoPath: String = null.toS
             .padding(16.dp)
             .padding(top = 90.dp)
             .padding(bottom = 30.dp)){
+
             item { // Nombre
                 Box {
                     TextField(
