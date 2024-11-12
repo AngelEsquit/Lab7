@@ -29,10 +29,11 @@ import com.example.lab7.ui.supermarket.viewmodel.SupermarketViewModelFactory
 @Composable
 fun ItemCard(name: String, quantity: String, path: String, viewModel: SupermarketViewModel) {
     // /storage/emulated/0/Android/data/com.example.lab7/files/20241109_232854.jpg
-    Card(
+    Card (
         modifier = Modifier
             .heightIn(min = 150.dp)
             .fillMaxWidth()
+            .padding(top = 16.dp)
     ) {
         Column {
             Button(onClick = {
@@ -41,7 +42,9 @@ fun ItemCard(name: String, quantity: String, path: String, viewModel: Supermarke
                     quantity = quantity, imagePath = path
                 )
                 viewModel.deleteItem(item.imagePath!!)
-            },) {
+            },
+                modifier = Modifier
+                    .padding(start = 16.dp, top = 16.dp)) {
                 Text(text = "Eliminar")
             }
 

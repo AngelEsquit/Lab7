@@ -55,7 +55,9 @@ fun MealsCategoriesScreen(navController: NavController,
                 ) {
 
                     item {
-                        Box(modifier = Modifier.fillMaxWidth()) {
+                        Box(modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 16.dp)) {
                             Button(onClick = { navigateTo(navController, NavigationState.Supermarket.route) }) {
                                 Text("Supermarket")
                             }

@@ -134,7 +134,7 @@ fun Camera(navController: NavController) {
         Button(onClick = {
             takePhoto(context, imageCaptureUseCase) { photoPath ->
             Log.d("CameraX", "Foto guardada en 2: $photoPath")
-            navigateTo(navController, NavigationState.SupermarketCamera.createRoute(photoPath))
+            navigateTo(navController, NavigationState.SupermarketCamera.createRoute(photoPath), NavigationState.Camera.route)
             }
         },
             modifier = Modifier

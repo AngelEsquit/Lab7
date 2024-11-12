@@ -25,7 +25,6 @@ fun SupermarketScreen(navController: NavController, viewModel: SupermarketViewMo
 
     val items = viewModel.supermarketItems.observeAsState(initial = emptyList())
 
-
     LaunchedEffect(Unit) {
         viewModel.getAllItems()
     }
@@ -42,7 +41,7 @@ fun SupermarketScreen(navController: NavController, viewModel: SupermarketViewMo
             .padding(bottom = 30.dp)) {
 
             item {
-                Button(onClick = { navigateTo(navController, NavigationState.SupermarketCamera.route) }) {
+                Button(onClick = { navigateTo(navController, NavigationState.Camera.route) }) {
                 Text(text = "Agregar producto") }
             }
 

@@ -84,7 +84,7 @@ fun SupermarketScreen(navController: NavController, photoPath: String, viewModel
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 32.dp)) {
-                    Button(onClick = { navigateTo(navController, NavigationState.Camera.route) }) {
+                    Button(onClick = { navigateTo(navController, NavigationState.Camera.route, NavigationState.SupermarketCamera.route) }) {
                         Text("Abrir cámara")
                     }
                 }
@@ -96,7 +96,7 @@ fun SupermarketScreen(navController: NavController, photoPath: String, viewModel
                         val item = SupermarketItemEntity(name = itemName,
                             quantity = quantity, imagePath = imagePath)
                         viewModel.insertItem(item)
-                        navigateTo(navController, NavigationState.Supermarket.route)
+                        navigateTo(navController, NavigationState.Supermarket.route, NavigationState.SupermarketCamera.route)
 
                     }) {
                         Text("Agregar")
