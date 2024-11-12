@@ -6,11 +6,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,22 +32,23 @@ import com.example.lab7.ui.supermarket.viewmodel.SupermarketViewModelFactory
 @Composable
 fun ItemCard(name: String, quantity: String, path: String, viewModel: SupermarketViewModel) {
     // /storage/emulated/0/Android/data/com.example.lab7/files/20241109_232854.jpg
-    Card (
+    Card(
         modifier = Modifier
-            .heightIn(min = 150.dp)
             .fillMaxWidth()
             .padding(top = 16.dp)
     ) {
         Column {
-            Button(onClick = {
-                val item = SupermarketItemEntity(
-                    name = name,
-                    quantity = quantity, imagePath = path
-                )
-                viewModel.deleteItem(item.imagePath!!)
-            },
+            Button(
+                onClick = {
+                    val item = SupermarketItemEntity(
+                        name = name,
+                        quantity = quantity, imagePath = path
+                    )
+                    viewModel.deleteItem(item.imagePath!!)
+                },
                 modifier = Modifier
-                    .padding(start = 16.dp, top = 16.dp)) {
+                    .padding(start = 16.dp, top = 16.dp)
+            ) {
                 Text(text = "Eliminar")
             }
 
@@ -66,9 +70,7 @@ fun ItemCard(name: String, quantity: String, path: String, viewModel: Supermarke
                 Column(
                     modifier = Modifier
                         .padding(16.dp)
-                        .fillMaxWidth()
-                        .background(color = androidx.compose.ui.graphics.Color.Blue)
-                        .weight(1f),
+                        .background(color = androidx.compose.ui.graphics.Color.Blue),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Text(text = "Imagen")
@@ -79,17 +81,10 @@ fun ItemCard(name: String, quantity: String, path: String, viewModel: Supermarke
 
                     Image(
                         painter = painter,
-                        contentDescription = "Imagen cargada desde el path",
-                        modifier = Modifier.width(200.dp)
+                        contentDescription = "Imagen",
+                        modifier = Modifier
+                            .height(100.dp)
                     )
-
-                    /*Image(
-                        painter = rememberAsyncImagePainter(
-                            model = item.imagePath
-                        ),
-                        contentDescription = "Imagen del teléfono",
-                        modifier = Modifier.fillMaxSize()
-                    )*/
                 }
             }
         }
@@ -97,6 +92,7 @@ fun ItemCard(name: String, quantity: String, path: String, viewModel: Supermarke
 }
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(showBackground = true)
 @Composable
 fun ItemCardPreview() {
@@ -106,7 +102,20 @@ fun ItemCardPreview() {
 
     val name = "Leche"
     val quantity = "1"
-    val path = "/storage/emulated/0/Android/data/com.example.lab7/files/20241109_232854.jpg"
+    val path = "/storage/emulated/0/Android/data/com.example.lab7/files/20241112_150022.jpg"
 
-    ItemCard(name, quantity, path, supermarketViewModel)
+    val name2 = "Pan"
+    val quantity2 = "2"
+    val path2 = "/storage/emulated/0/Android/data/com.example.lab7/files/20241112_150022.jpg"
+
+    Scaffold {
+        LazyColumn {
+            item {
+                ItemCard(name, quantity, path, supermarketViewModel)
+            }
+            item {
+                ItemCard(name2, quantity2, path2, supermarketViewModel)
+            }
+        }
+    }
 }
