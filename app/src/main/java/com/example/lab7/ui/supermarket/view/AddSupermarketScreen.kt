@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.lab7.MyApp
 import com.example.lab7.database.supermarket.SupermarketItemEntity
 import com.example.lab7.navigation.AppBar
 import com.example.lab7.navigation.NavigationState
@@ -34,9 +35,12 @@ import com.example.lab7.ui.supermarket.viewmodel.SupermarketViewModelFactory
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun SupermarketScreen(navController: NavController, photoPath: String = null.toString(), viewModel: SupermarketViewModel = viewModel()) {
+fun SupermarketScreen(navController: NavController, photoPath: String, viewModel: SupermarketViewModel) {
     var itemName by remember { mutableStateOf("") }
     var quantity by remember { mutableStateOf("") }
+    var imagePath by remember { mutableStateOf("") }
+
+    imagePath = photoPath
 
     Scaffold (
         topBar = {
@@ -50,6 +54,7 @@ fun SupermarketScreen(navController: NavController, photoPath: String = null.toS
             .padding(bottom = 30.dp)){
             item { // Nombre
                 Box {
+                    Text(text = photoPath)
                     TextField(
                         value = itemName,
                         onValueChange = { itemName = it },
@@ -77,7 +82,9 @@ fun SupermarketScreen(navController: NavController, photoPath: String = null.toS
             }
 
             item {
-                Box(modifier = Modifier.fillMaxWidth().padding(top = 32.dp)) {
+                Box(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 32.dp)) {
                     Button(onClick = { navigateTo(navController, NavigationState.Camera.route) }) {
                         Text("Abrir cámara")
                     }
@@ -87,8 +94,8 @@ fun SupermarketScreen(navController: NavController, photoPath: String = null.toS
             item { // Botón
                 Box (modifier = Modifier.padding(top = 32.dp)) {
                     Button(onClick = {
-                        val item = SupermarketItemEntity(itemName,
-                            quantity, photoPath)
+                        val item = SupermarketItemEntity(name = itemName,
+                            quantity = quantity, imagePath = imagePath)
                         viewModel.insertItem(item)
                         navigateTo(navController, NavigationState.Supermarket.route)
 
@@ -100,9 +107,10 @@ fun SupermarketScreen(navController: NavController, photoPath: String = null.toS
         }
     }
 }
-
+/*
 @Preview(showBackground = true)
 @Composable
 fun SupermarketScreenPreview() {
-    SupermarketScreen(navController = rememberNavController())
-}
+    val navController = rememberNavController()
+    SupermarketScreen(navController = navController, viewModel = viewModel { SupermarketViewModel(supermarketRepository) })
+}*/

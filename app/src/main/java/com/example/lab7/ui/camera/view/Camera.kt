@@ -131,8 +131,11 @@ fun Camera(navController: NavController) {
             }
         }
         
-        Button(onClick = { photoPath = takePhoto(context, imageCaptureUseCase)
-            navigateTo(navController, NavigationState.SupermarketCamera.createRoute(photoPath!!))
+        Button(onClick = {
+            takePhoto(context, imageCaptureUseCase) { photoPath ->
+            Log.d("CameraX", "Foto guardada en 2: $photoPath")
+            navigateTo(navController, NavigationState.SupermarketCamera.createRoute(photoPath))
+            }
         },
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -142,7 +145,7 @@ fun Camera(navController: NavController) {
     }
 }
 
-private fun takePhoto(context: Context, imageCapture: ImageCapture?): String {
+private fun takePhoto(context: Context, imageCapture: ImageCapture?, onPhotoSaved: (String) -> Unit) {
     var savedPhotoPath = ""
 
     val directory = context.getExternalFilesDir(null)
@@ -165,11 +168,10 @@ private fun takePhoto(context: Context, imageCapture: ImageCapture?): String {
             override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
                 savedPhotoPath = photoFile.absolutePath
                 Log.d("CameraX", "Foto guardada en: ${photoFile.absolutePath}")
+                onPhotoSaved(savedPhotoPath) // Llamar al callback cuando la foto se guarde
             }
         }
     )
-
-    return savedPhotoPath
 }
 
 @androidx.compose.ui.tooling.preview.Preview(showBackground = true)

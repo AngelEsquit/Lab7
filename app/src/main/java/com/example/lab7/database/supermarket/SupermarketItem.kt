@@ -19,6 +19,4 @@ data class SupermarketItemEntity(
 
     @ColumnInfo(name = "imagePath")
     val imagePath: String?
-) {
-    constructor(name: String, imageUrl: String, description: String?) : this(0, name, imageUrl, description)
-}
+)

@@ -8,13 +8,21 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.example.lab7.database.supermarket.SupermarketItemEntity
 import com.example.lab7.ui.supermarket.repositories.SupermarketRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class SupermarketViewModel(private val supermarketRepository: SupermarketRepository) : ViewModel() {
 
     private val _supermarketItems = MutableLiveData<List<SupermarketItemEntity>>()
     val supermarketItems: LiveData<List<SupermarketItemEntity>> = _supermarketItems
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _errorMessage = MutableLiveData<String?>()
+    val errorMessage: LiveData<String?> = _errorMessage
 
 
     fun insertItem(item: SupermarketItemEntity) {
@@ -35,16 +43,31 @@ class SupermarketViewModel(private val supermarketRepository: SupermarketReposit
         }
     }
 
-    fun getItemById(itemId: String): LiveData<SupermarketItemEntity> {
+    fun getItemById(itemId: String): List<SupermarketItemEntity> {
         return supermarketRepository.getItemById(itemId)
     }
 
     fun getAllItems() {
-        viewModelScope.launch {
-            supermarketRepository.getAllItems()
-            val items = supermarketRepository.getAllItems()
-            _supermarketItems.postValue(items)
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val items = supermarketRepository.getAllItems()
+                _supermarketItems.postValue(items)
+            } catch (e: Exception) {
+                handleException(e)
+            } finally {
+                _isLoading.postValue(false)
+            }
+
         }
+    }
+
+    private fun handleException(exception: Exception) {
+        when (exception) {
+            is IOException -> _errorMessage.value = "Network error: Check your internet connection."
+            else -> _errorMessage.value = "An unexpected error occurred."
+        }
+        // Optionally log the exception (e.g., using a logger or crash reporting tool)
+        exception.printStackTrace()
     }
 }
 

@@ -38,8 +38,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MealsWithRoomTheme {
-                Navigation(navController = rememberNavController(),
-                    mealViewModel = mealViewModel)
+                Navigation(
+                    navController = rememberNavController(),
+                    mealViewModel = mealViewModel,
+                    supermarketViewModel = supermarketViewModel)
             }
         }
     }

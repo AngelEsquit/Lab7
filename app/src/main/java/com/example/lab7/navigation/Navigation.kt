@@ -15,9 +15,10 @@ import com.example.lab7.ui.categories.viewmodel.MealsCategoriesViewModel
 import com.example.lab7.ui.mealdetail.view.MealsDetailScreen
 import com.example.lab7.ui.meals.view.MealsFilterScreen
 import com.example.lab7.ui.supermarket.view.SupermarketScreen
+import com.example.lab7.ui.supermarket.viewmodel.SupermarketViewModel
 
 @Composable
-fun Navigation(navController: NavHostController, mealViewModel: MealsCategoriesViewModel, modifier: Modifier = Modifier) {
+fun Navigation(navController: NavHostController, mealViewModel: MealsCategoriesViewModel, supermarketViewModel: SupermarketViewModel, modifier: Modifier = Modifier) {
     NavHost(navController = navController,
         startDestination = NavigationState.MealsCategories.route,
         modifier = modifier) {
@@ -44,14 +45,14 @@ fun Navigation(navController: NavHostController, mealViewModel: MealsCategoriesV
         }
 
         composable(route = NavigationState.Supermarket.route) {
-            SupermarketScreen(navController = navController)
+            SupermarketScreen(navController = navController, viewModel = supermarketViewModel)
         }
 
-        composable(route = NavigationState.SupermarketCamera.route) {backStackEntry ->
+        composable(route = NavigationState.SupermarketCamera.route, arguments = listOf(navArgument("photoPath") { type = NavType.StringType })
+        ) { backStackEntry ->
             val photoPath = backStackEntry.arguments?.getString("photoPath")
-            if (photoPath != null) {
-                SupermarketScreen(navController = navController, photoPath = photoPath)
-            }
+            SupermarketScreen(navController = navController, photoPath = photoPath ?: "", viewModel = supermarketViewModel)
+
         }
     }
 }

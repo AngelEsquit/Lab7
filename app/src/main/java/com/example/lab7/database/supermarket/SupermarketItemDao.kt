@@ -1,13 +1,11 @@
 package com.example.lab7.database.supermarket
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SupermarketItemDao {
@@ -25,5 +23,5 @@ interface SupermarketItemDao {
     fun getAllItems(): List<SupermarketItemEntity>
 
     @Query("SELECT * FROM supermarket_items WHERE id = :id")
-    fun getItemById(id: String): LiveData<SupermarketItemEntity>
+    fun getItemById(id: String): List<SupermarketItemEntity>
 }
