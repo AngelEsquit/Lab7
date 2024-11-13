@@ -15,15 +15,13 @@ sealed class NavigationState(val route: String) {
     }
     data object Home: NavigationState("home")
 
-    data object Profile: NavigationState("profile")
-
-    data object ViewPhoto: NavigationState("viewPhoto")
-
     data object Camera: NavigationState("camera")
+
+    data object CameraEdit : NavigationState("camera/edit")
 
     data object Supermarket: NavigationState("supermarket")
 
-    data object SupermarketCamera: NavigationState("supermarket/{photoPath}") {
+    data object AddSupermarket: NavigationState("supermarket/{photoPath}") {
         fun createRoute(photoPath: String): String {
             val encodedPath = URLEncoder.encode(photoPath, StandardCharsets.UTF_8.toString())
             return "supermarket/$encodedPath"
@@ -31,4 +29,6 @@ sealed class NavigationState(val route: String) {
 
 
     }
+
+    data object EditSupermarket: NavigationState("supermarket/edit")
 }

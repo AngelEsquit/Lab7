@@ -46,7 +46,7 @@ fun SupermarketScreen(navController: NavController, viewModel: SupermarketViewMo
             }
 
             items(items.value) {// Elementos de la lista de productos
-                it.imagePath?.let { it1 -> ItemCard(it.name, it.quantity, it1, viewModel) }
+                it.imagePath?.let { it1 -> ItemCard(navController, it.name, it.quantity, it1, viewModel) }
             }
         }
     }

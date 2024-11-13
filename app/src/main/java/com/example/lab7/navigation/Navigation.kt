@@ -7,13 +7,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.lab7.ui.camera.view.CameraScreen
 import com.example.lab7.ui.categories.view.MealsCategoriesScreen
 import com.example.lab7.ui.categories.viewmodel.MealsCategoriesViewModel
-import com.example.lab7.ui.mealdetail.view.MealsDetailScreen
 import com.example.lab7.ui.meals.view.MealsFilterScreen
+import com.example.lab7.ui.supermarket.view.EditSupermarket
 import com.example.lab7.ui.supermarket.view.SupermarketScreen
 import com.example.lab7.ui.supermarket.viewmodel.SupermarketViewModel
 
@@ -41,18 +40,26 @@ fun Navigation(navController: NavHostController, mealViewModel: MealsCategoriesV
         }
 
         composable(route = NavigationState.Camera.route) {
-            CameraScreen(navController = navController)
+            CameraScreen(navController = navController, viewModel = supermarketViewModel)
+        }
+
+        composable(route = NavigationState.CameraEdit.route) {
+            CameraScreen(navController = navController, type = "edit", viewModel = supermarketViewModel)
         }
 
         composable(route = NavigationState.Supermarket.route) {
             SupermarketScreen(navController = navController, viewModel = supermarketViewModel)
         }
 
-        composable(route = NavigationState.SupermarketCamera.route, arguments = listOf(navArgument("photoPath") { type = NavType.StringType })
+        composable(route = NavigationState.AddSupermarket.route, arguments = listOf(navArgument("photoPath") { type = NavType.StringType })
         ) { backStackEntry ->
             val photoPath = backStackEntry.arguments?.getString("photoPath")
             SupermarketScreen(navController = navController, photoPath = photoPath ?: "", viewModel = supermarketViewModel)
 
+        }
+
+        composable(route = NavigationState.EditSupermarket.route) {
+            EditSupermarket(navController = navController, viewModel = supermarketViewModel)
         }
     }
 }

@@ -33,10 +33,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.lab7.database.supermarket.SupermarketItemEntity
 import com.example.lab7.navigation.NavigationState
 import com.example.lab7.navigation.navigateTo
+import com.example.lab7.ui.supermarket.viewmodel.SupermarketViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
@@ -47,7 +50,7 @@ import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
-fun CameraScreen(navController: NavController) {
+fun CameraScreen(navController: NavController, type: String = "", viewModel: SupermarketViewModel) {
     val cameraPermissionState = rememberPermissionState(permission = Manifest.permission.CAMERA)
 
     Scaffold(
@@ -60,7 +63,7 @@ fun CameraScreen(navController: NavController) {
             .padding(innerPadding)) {
             when (cameraPermissionState.status) {
                 is PermissionStatus.Granted -> {
-                    Camera(navController = navController) // Mostrar la cámara si el permiso está concedido
+                    Camera(navController = navController, type = type, viewModel = viewModel) // Mostrar la cámara si el permiso está concedido
                 }
                 is PermissionStatus.Denied -> {
                     // Mostrar un mensaje al usuario solicitando el permiso
@@ -82,7 +85,7 @@ fun CameraScreen(navController: NavController) {
 }
 
 @Composable
-fun Camera(navController: NavController) {
+fun Camera(navController: NavController, type: String = "", viewModel: SupermarketViewModel) {
     val context = LocalContext.current
     val lifecycleOwner = androidx.lifecycle.compose.LocalLifecycleOwner.current
     var previewUseCase by remember { mutableStateOf<Preview?>(null) }
@@ -134,7 +137,12 @@ fun Camera(navController: NavController) {
         Button(onClick = {
             takePhoto(context, imageCaptureUseCase) { photoPath ->
             Log.d("CameraX", "Foto guardada en 2: $photoPath")
-            navigateTo(navController, NavigationState.SupermarketCamera.createRoute(photoPath), NavigationState.Camera.route)
+                if (type == "edit") {
+                    viewModel.setNewItem(SupermarketItemEntity(name = "", quantity = "", imagePath = photoPath))
+                    navigateTo(navController, NavigationState.EditSupermarket.route)
+                } else {
+                    navigateTo(navController, NavigationState.AddSupermarket.createRoute(photoPath), NavigationState.Camera.route)
+                }
             }
         },
             modifier = Modifier
@@ -178,5 +186,5 @@ private fun takePhoto(context: Context, imageCapture: ImageCapture?, onPhotoSave
 @Composable
 fun DefaultPreview() {
     val navController = rememberNavController()
-    CameraScreen(navController = navController)
+    CameraScreen(navController = navController, viewModel = viewModel())
 }

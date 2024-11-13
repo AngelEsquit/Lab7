@@ -22,6 +22,6 @@ interface SupermarketItemDao {
     @Query("SELECT * FROM supermarket_items")
     fun getAllItems(): List<SupermarketItemEntity>
 
-    @Query("SELECT * FROM supermarket_items WHERE id = :id")
-    fun getItemById(id: String): List<SupermarketItemEntity>
+    @Query("SELECT * FROM supermarket_items WHERE itemName = :itemName AND quantity = :quantity AND imagePath = :imagePath")
+    fun getItemByAtributes(itemName: String, quantity: String, imagePath: String): SupermarketItemEntity
 }

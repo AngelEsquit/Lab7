@@ -20,11 +20,15 @@ class SupermarketRepository(private val supermarketItemDao: SupermarketItemDao) 
 
     suspend fun updateItem(item: SupermarketItemEntity) {
         supermarketItemDao.update(item)
+        getAllItems()
     }
 
     suspend fun deleteItem(path: String) {
         supermarketItemDao.delete(path)
+        getAllItems()
     }
 
-    fun getItemById(id: String): List<SupermarketItemEntity> = supermarketItemDao.getItemById(id)
+    fun getItemByAtributes(itemName: String, quantity: String, imagePath: String): SupermarketItemEntity {
+        return supermarketItemDao.getItemByAtributes(itemName, quantity, imagePath)
+    }
 }

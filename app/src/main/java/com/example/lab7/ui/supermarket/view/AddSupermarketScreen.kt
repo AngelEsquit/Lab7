@@ -17,21 +17,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.lab7.MyApp
 import com.example.lab7.database.supermarket.SupermarketItemEntity
 import com.example.lab7.navigation.AppBar
 import com.example.lab7.navigation.NavigationState
 import com.example.lab7.navigation.navigateTo
-import com.example.lab7.ui.supermarket.repositories.SupermarketRepository
 import com.example.lab7.ui.supermarket.viewmodel.SupermarketViewModel
-import com.example.lab7.ui.supermarket.viewmodel.SupermarketViewModelFactory
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -84,7 +77,7 @@ fun SupermarketScreen(navController: NavController, photoPath: String, viewModel
                 Box(modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 32.dp)) {
-                    Button(onClick = { navigateTo(navController, NavigationState.Camera.route, NavigationState.SupermarketCamera.route) }) {
+                    Button(onClick = { navigateTo(navController, NavigationState.Camera.route, NavigationState.AddSupermarket.route) }) {
                         Text("Abrir cámara")
                     }
                 }
@@ -96,7 +89,7 @@ fun SupermarketScreen(navController: NavController, photoPath: String, viewModel
                         val item = SupermarketItemEntity(name = itemName,
                             quantity = quantity, imagePath = imagePath)
                         viewModel.insertItem(item)
-                        navigateTo(navController, NavigationState.Supermarket.route, NavigationState.SupermarketCamera.route)
+                        navigateTo(navController, NavigationState.Supermarket.route, NavigationState.AddSupermarket.route)
 
                     }) {
                         Text("Agregar")
